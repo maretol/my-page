@@ -16,6 +16,15 @@
   }
 }
 
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 16px;
+}
+
+/*
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -25,3 +34,4 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+*/
