@@ -6,21 +6,25 @@ export type contentsAPIResult = {
   revisedAt: string
   title: string
   content: string
-  category: {
-    id: string
-    createdAt: string
-    updatedAt: string
-    publishedAt: string
-    revisedAt: string
-    name: string
-  }
+  categories: categoryAPIResult[]
+  publish: boolean
 }
 
-export type categoriesAPIResult = {
+export type categoryAPIResult = {
   id: string
   createdAt: string
   updatedAt: string
   publishedAt: string
   revisedAt: string
   name: string
+}
+
+export type infoAPIResult = {
+  id: string
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  revisedAt: string
+  page_pathname: string
+  main_text: string
 }
