@@ -1,23 +1,10 @@
 'use server'
-import { createClient } from 'microcms-js-sdk'
+import { CustomRequestInit, createClient } from 'microcms-js-sdk'
 import type {
   categoryAPIResult,
   contentsAPIResult,
   infoAPIResult,
 } from './result'
-
-const API_INFO = {
-  contents: {
-    path: 'contents',
-    result: {} as contentsAPIResult,
-  },
-  category: {
-    path: 'category',
-    result: {} as categoryAPIResult,
-  },
-}
-
-export type API = keyof typeof API_INFO
 
 const apiKey = process.env.CMS_API_KEY || ''
 
@@ -25,6 +12,12 @@ const client = createClient({
   serviceDomain: 'maretol-blog',
   apiKey: apiKey,
 })
+
+const customRequest: CustomRequestInit = {
+  next: {
+    revalidate: 60,
+  },
+}
 
 export async function getContents() {
   if (apiKey === undefined) {
@@ -34,9 +27,7 @@ export async function getContents() {
   const response = await client
     .getList<contentsAPIResult>({
       endpoint: 'contents',
-      customRequestInit: {
-        cache: 'no-cache',
-      },
+      customRequestInit: customRequest,
     })
     .then((res) => {
       return res
@@ -61,9 +52,7 @@ export async function getContent(articleID: string) {
     .getList<contentsAPIResult>({
       endpoint: 'contents',
       queries: { ids: articleID },
-      customRequestInit: {
-        cache: 'no-cache',
-      },
+      customRequestInit: customRequest,
     })
     .then((res) => {
       return res
@@ -86,9 +75,7 @@ export async function getTags() {
   const response = await client
     .getList<categoryAPIResult>({
       endpoint: 'categories',
-      customRequestInit: {
-        cache: 'no-cache',
-      },
+      customRequestInit: customRequest,
     })
     .then((res) => {
       return res
@@ -112,9 +99,7 @@ export async function getContentsByTag(tagIDs: string[]) {
     .getList<contentsAPIResult>({
       endpoint: 'contents',
       queries: { filters: `categories[contains]${tagIDs.join(',')}` },
-      customRequestInit: {
-        cache: 'no-cache',
-      },
+      customRequestInit: customRequest,
     })
     .then((res) => {
       return res
@@ -137,9 +122,7 @@ export async function getInfo() {
   const response = await client
     .getList<infoAPIResult>({
       endpoint: 'info',
-      customRequestInit: {
-        cache: 'no-cache',
-      },
+      customRequestInit: customRequest,
     })
     .then((res) => {
       return res
