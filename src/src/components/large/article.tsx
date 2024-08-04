@@ -1,6 +1,4 @@
 import { categoryAPIResult } from '@/lib/api/result'
-import { addCodeFilename } from '@/lib/dom'
-import { JSDOM } from 'jsdom'
 import {
   Card,
   CardContent,
@@ -15,6 +13,7 @@ import Tags from '../middle/tags'
 import { Button } from '../ui/button'
 import ShareButton from '../small/share'
 import { HomeIcon } from 'lucide-react'
+import { doRewrite } from '@/lib/dom'
 
 type ArticleProps = {
   id: string
@@ -30,15 +29,14 @@ type FullAtricleProps = ArticleProps & {
   shareURL: string
 }
 
-export function Article({
+export async function Article({
   id,
   title,
   updatedAt,
   categories,
   rawContent,
 }: ArticleProps) {
-  const articleDOM = new JSDOM(rawContent)
-  addCodeFilename(articleDOM)
+  const contentHTML = await doRewrite(rawContent)
 
   return (
     <Card key={id}>
@@ -57,7 +55,7 @@ export function Article({
         <div
           className="space-y-5 content-sample line-clamp-6"
           dangerouslySetInnerHTML={{
-            __html: articleDOM.window.document.body.innerHTML,
+            __html: contentHTML,
           }}
         ></div>
       </CardContent>
@@ -70,7 +68,7 @@ export function Article({
   )
 }
 
-export function FullArticle({
+export async function FullArticle({
   title,
   createdAt,
   updatedAt,
@@ -79,8 +77,7 @@ export function FullArticle({
   type,
   shareURL,
 }: FullAtricleProps) {
-  const articleDOM = new JSDOM(rawContent)
-  addCodeFilename(articleDOM)
+  const contentHTML = await doRewrite(rawContent)
   return (
     <Card>
       <CardHeader>
@@ -105,7 +102,7 @@ export function FullArticle({
         <div
           className="space-y-5 content"
           dangerouslySetInnerHTML={{
-            __html: articleDOM.window.document.body.innerHTML,
+            __html: contentHTML,
           }}
         />
       </CardContent>

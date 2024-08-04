@@ -5,7 +5,6 @@ import type {
   contentsAPIResult,
   infoAPIResult,
 } from './result'
-import { log } from 'console'
 
 const API_INFO = {
   contents: {
@@ -43,7 +42,7 @@ export async function getContents() {
       return res
     })
     .catch((err) => {
-      log(err)
+      console.log(err)
     })
 
   if (response === undefined) {
@@ -70,7 +69,7 @@ export async function getContent(articleID: string) {
       return res
     })
     .catch((err) => {
-      log(err)
+      console.log(err)
     })
 
   if (response === undefined) {
@@ -95,7 +94,7 @@ export async function getTags() {
       return res
     })
     .catch((err) => {
-      log(err)
+      console.log(err)
     })
 
   if (response === undefined) {
@@ -121,7 +120,7 @@ export async function getContentsByTag(tagIDs: string[]) {
       return res
     })
     .catch((err) => {
-      log(err)
+      console.log(err)
     })
 
   if (response === undefined) {
@@ -146,7 +145,7 @@ export async function getInfo() {
       return res
     })
     .catch((err) => {
-      log(err)
+      console.log(err)
     })
 
   if (response === undefined) {

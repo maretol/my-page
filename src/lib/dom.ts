@@ -1,14 +1,19 @@
-import { JSDOM } from 'jsdom'
+import { HTMLRewriter } from 'htmlrewriter'
 
-export function addCodeFilename(dom: JSDOM) {
-  const codeElements =
-    dom.window.document.querySelectorAll('div[data-filename]')
-  codeElements.forEach((element) => {
+const rewriter = new HTMLRewriter()
+
+// filenameの追加
+rewriter.on('div[data-filename]', {
+  element(element: any) {
     const filename = element.getAttribute('data-filename')
-    const filenameElement = dom.window.document.createElement('p')
-    filenameElement.className = 'code-filename'
-    filenameElement.textContent = filename
-    const childElement = element.querySelector('pre')
-    childElement?.insertAdjacentElement('beforebegin', filenameElement)
-  })
+    element.prepend(`<p class="code-filename">${filename}</p>`, {
+      html: true,
+    })
+  },
+})
+
+async function doRewrite(rawHTML: string) {
+  return await rewriter.transform(new Response(rawHTML)).text()
 }
+
+export { doRewrite }

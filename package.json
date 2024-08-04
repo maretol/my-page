@@ -13,7 +13,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "jsdom": "^24.1.1",
+    "htmlrewriter": "^0.0.9",
     "lucide-react": "^0.307.0",
     "microcms-js-sdk": "^3.1.2",
     "next": "^14.2.5",
@@ -23,7 +23,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/jsdom": "^21.1.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
