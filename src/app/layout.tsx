@@ -8,6 +8,8 @@ import { Button } from '@/src/components/ui/button'
 import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
 
+export const runtime = 'edge'
+
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',

@@ -1,6 +1,8 @@
 import { getInfo } from '@/lib/api/accessor'
 import { FullArticle } from '@/src/components/large/article'
 
+export const runtime = 'edge'
+
 export function generateMetadata() {
   return {
     title: '連絡先 | Maretol Base',

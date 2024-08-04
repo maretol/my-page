@@ -3,6 +3,8 @@ import { getContent } from '@/lib/api/accessor'
 import { contentsAPIResult } from '@/lib/api/result'
 import { FullArticle } from '@/src/components/large/article'
 
+export const runtime = 'edge'
+
 export async function generateMetadata({
   params,
 }: {

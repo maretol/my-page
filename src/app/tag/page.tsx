@@ -3,6 +3,8 @@ import { Article } from '@/src/components/large/article'
 import { Button } from '@/src/components/ui/button'
 import Link from 'next/link'
 
+export const runtime = 'edge'
+
 export async function generateMetadata({
   searchParams,
 }: {
