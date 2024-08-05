@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Button } from '@/src/components/ui/button'
 import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
+import Script from 'next/script'
 
 export const runtime = 'edge'
 
@@ -32,6 +33,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
+      <Script
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "e7ad45139e61492b95a8686432f438e4"}'
+      />
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased bg-gray-300',
