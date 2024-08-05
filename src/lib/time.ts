@@ -6,3 +6,8 @@ export function convertJST(datetime: string) {
     timeStyle: 'long',
   })
 }
+
+export function getCurrentTime() {
+  const date = new Date()
+  return date.toISOString()
+}

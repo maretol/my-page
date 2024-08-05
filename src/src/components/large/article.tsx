@@ -79,7 +79,7 @@ export async function FullArticle({
 }: FullAtricleProps) {
   const contentHTML = await doRewrite(rawContent)
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>
@@ -113,16 +113,17 @@ export async function FullArticle({
             <ShareButton variant="twitter" url={shareURL} title={title} />
             <ShareButton variant="facebook" url={shareURL} title={title} />
           </div>
-          <div className="flex justify-center">
-            <Link href="/">
-              <Button
-                variant="secondary"
-                className="w-96 flex justify-center items-end gap-1"
-              >
+          <div className="flex justify-center mt-2">
+            <Button
+              variant="secondary"
+              className="w-96 flex justify-center items-end gap-1"
+              asChild
+            >
+              <Link href="/">
                 <HomeIcon />
                 <h2>Home</h2>
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </CardFooter>

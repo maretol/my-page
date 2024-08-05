@@ -3,22 +3,16 @@ import { Button } from '../ui/button'
 
 export default function HeaderButtons() {
   return (
-    <div className="flex flex-row gap-1">
-      <Link href="/tag">
-        <Button variant="outline" className="w-48">
-          Tag Search
-        </Button>
-      </Link>
-      <Link href="/about">
-        <Button variant="outline" className="w-48">
-          About
-        </Button>
-      </Link>
-      <Link href="/contact">
-        <Button variant="outline" className="w-48">
-          Contact
-        </Button>
-      </Link>
+    <div className="flex flex-col sm:flex-row gap-1">
+      <Button variant="outline" className="w-full sm:w-48" asChild>
+        <Link href="/tag">Tag Search</Link>
+      </Button>
+      <Button variant="outline" className="w-full sm:w-48" asChild>
+        <Link href="/about">About</Link>
+      </Button>
+      <Button variant="outline" className="w-full sm:w-48" asChild>
+        <Link href="/contact">Contact</Link>
+      </Button>
     </div>
   )
 }

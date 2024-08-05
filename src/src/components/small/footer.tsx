@@ -4,19 +4,19 @@ import { ArrowBigUpIcon, HomeIcon } from 'lucide-react'
 
 export default function FooterButtons() {
   return (
-    <div className="flex flex-row justify-center items-center mb-4">
-      <Link href="/">
-        <Button variant="default" className="items-end w-48 gap-1">
+    <div className="flex sm:flex-row flex-col justify-center items-center mb-4">
+      <Button variant="default" className="items-end w-48 gap-1" asChild>
+        <Link href="/">
           <HomeIcon />
           Back to Home
-        </Button>
-      </Link>
-      <Link href="#top" scroll={true} replace={true}>
-        <Button variant="secondary" className="items-end w-48 gap-1">
+        </Link>
+      </Button>
+      <Button variant="secondary" className="items-end w-48 gap-1" asChild>
+        <Link href="#top" scroll={true} replace={true}>
           <ArrowBigUpIcon />
           Jump to the Top
-        </Button>
-      </Link>
+        </Link>
+      </Button>
     </div>
   )
 }
