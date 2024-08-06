@@ -1,5 +1,6 @@
 import { getInfo } from '@/lib/api/accessor'
 import { FullArticle } from '@/src/components/large/article'
+import { metadata } from '../layout'
 
 export const runtime = 'edge'
 
@@ -7,6 +8,12 @@ export function generateMetadata() {
   return {
     title: '連絡先 | Maretol Base',
     description: '連絡先ページ',
+    openGraph: {
+      ...metadata.openGraph,
+      title: '連絡先 | Maretol Base',
+      description: '連絡先ページ',
+      url: process.env.HOST_NAME + '/contact',
+    },
   }
 }
 

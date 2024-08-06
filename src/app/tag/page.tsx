@@ -2,6 +2,7 @@ import { getContentsByTag, getTags } from '@/lib/api/accessor'
 import { Article } from '@/src/components/large/article'
 import { Button } from '@/src/components/ui/button'
 import Link from 'next/link'
+import { metadata } from '../layout'
 
 export const runtime = 'edge'
 
@@ -28,6 +29,14 @@ export async function generateMetadata({
       .map((t) => t.name)
       .join(', ')} | Maretol Base`,
     description: 'タグ検索ページ',
+    openGraph: {
+      ...metadata.openGraph,
+      title: `タグ検索：${selectedTags
+        .map((t) => t.name)
+        .join(', ')} | Maretol Base`,
+      description: 'タグ検索ページ',
+      url: process.env.HOST_NAME + '/tag',
+    },
   }
 }
 

@@ -1,12 +1,19 @@
 import { getInfo } from '@/lib/api/accessor'
 import { FullArticle } from '@/src/components/large/article'
+import { metadata } from '../layout'
 
 export const runtime = 'edge'
 
 export function generateMetadata() {
   return {
-    title: 'このページについて | Maretol Base',
-    description: 'このページについて',
+    title: 'このサイトについて | Maretol Base',
+    description: 'このサイトについて',
+    openGraph: {
+      ...metadata.openGraph,
+      title: 'このサイトについて | Maretol Base',
+      description: 'このサイトについて',
+      url: process.env.HOST_NAME + '/about',
+    },
   }
 }
 

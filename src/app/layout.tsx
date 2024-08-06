@@ -24,6 +24,14 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'Maretol Base',
   description: 'Maretolのホームページ',
+  openGraph: {
+    title: 'Maretol Base',
+    description: 'Maretolのホームページ',
+    type: 'website',
+    url: process.env.HOST_NAME || 'https://www.maretol.com/',
+    siteName: 'Maretol Base',
+    images: [],
+  },
 }
 
 export default function RootLayout({
