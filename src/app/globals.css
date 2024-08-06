@@ -156,4 +156,7 @@ code {
   h2 {
     @apply underline underline-offset-4;
   }
+  a {
+    @apply underline underline-offset-2 decoration-gray-300 hover:decoration-gray-500;
+  }
 }
