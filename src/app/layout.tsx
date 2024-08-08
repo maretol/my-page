@@ -8,6 +8,7 @@ import { Button } from '@/src/components/ui/button'
 import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
 import Script from 'next/script'
+import { getHostname } from '@/lib/env'
 
 export const runtime = 'edge'
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
     title: 'Maretol Base',
     description: 'Maretolのホームページ',
     type: 'website',
-    url: process.env.HOST_NAME || 'https://www.maretol.com/',
+    url: getHostname(),
     siteName: 'Maretol Base',
     images: [],
   },

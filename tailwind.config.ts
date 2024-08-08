@@ -56,6 +56,11 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        opacity: {
+          0: 'rgba(255, 255, 255, 1) 0%',
+          30: 'rgba(255, 255, 255, 0.3) 25%',
+          100: 'rgba(255, 255, 255, 0) 100%',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -5,8 +5,9 @@ import type {
   contentsAPIResult,
   infoAPIResult,
 } from './result'
+import { getCMSAPIKey } from '../env'
 
-const apiKey = process.env.CMS_API_KEY || ''
+const apiKey = getCMSAPIKey()
 
 const client = createClient({
   serviceDomain: 'maretol-blog',

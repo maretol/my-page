@@ -1,6 +1,7 @@
 import { getInfo } from '@/lib/api/accessor'
 import { FullArticle } from '@/src/components/large/article'
 import { metadata } from '../layout'
+import { getHostname } from '@/lib/env'
 
 export const runtime = 'edge'
 
@@ -12,7 +13,7 @@ export function generateMetadata() {
       ...metadata.openGraph,
       title: '連絡先 | Maretol Base',
       description: '連絡先ページ',
-      url: process.env.HOST_NAME + '/contact',
+      url: getHostname() + '/contact',
     },
   }
 }
@@ -24,7 +25,7 @@ export default async function ContactPage() {
     (c) => c.page_pathname === '/contact' || c.page_pathname === 'contact',
   )[0]
 
-  const host = process.env.HOST
+  const host = getHostname()
   const path = '/contact'
   const url = `${host}${path}`
 

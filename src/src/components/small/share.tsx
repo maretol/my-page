@@ -30,7 +30,7 @@ function ShareTwitterButton({ url, title }: { url: string; title: string }) {
   return (
     <Link href={href} target="_blank" rel="noopener noreferrer">
       <Button variant="secondary" className="p-3">
-        <TwitterIcon size={24} />
+        <TwitterIcon size={20} />
       </Button>
     </Link>
   )
