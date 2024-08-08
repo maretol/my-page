@@ -1,12 +1,20 @@
 import { getInfo } from '@/lib/api/accessor'
 import { FullArticle } from '@/src/components/large/article'
+import { metadata } from '../layout'
+import { getHostname } from '@/lib/env'
 
 export const runtime = 'edge'
 
 export function generateMetadata() {
   return {
-    title: 'このページについて | Maretol Base',
-    description: 'このページについて',
+    title: 'このサイトについて | Maretol Base',
+    description: 'このサイトについて',
+    openGraph: {
+      ...metadata.openGraph,
+      title: 'このサイトについて | Maretol Base',
+      description: 'このサイトについて',
+      url: getHostname() + '/about',
+    },
   }
 }
 
@@ -17,7 +25,7 @@ export default async function About() {
     (c) => c.page_pathname === '/about' || c.page_pathname === 'about',
   )[0]
 
-  const host = process.env.HOST
+  const host = getHostname()
   const path = '/about'
   const url = `${host}${path}`
 

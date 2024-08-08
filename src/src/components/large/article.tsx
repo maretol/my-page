@@ -12,7 +12,7 @@ import { convertJST } from '@/lib/time'
 import Tags from '../middle/tags'
 import { Button } from '../ui/button'
 import ShareButton from '../small/share'
-import { HomeIcon } from 'lucide-react'
+import { BookIcon, HomeIcon } from 'lucide-react'
 import { doRewrite } from '@/lib/dom'
 
 type ArticleProps = {
@@ -51,18 +51,22 @@ export async function Article({
           <Tags tags={categories} />
         </CardContent>
       </CardHeader>
-      <CardContent>
+      <CardContent className="relative">
         <div
-          className="space-y-5 content-sample line-clamp-6"
+          className="space-y-5 content-sample line-clamp-6 "
           dangerouslySetInnerHTML={{
             __html: contentHTML,
           }}
         ></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t to-opacity-100 from-10% via-opacity-30 from-opacity-0" />
       </CardContent>
       <CardFooter>
-        <Link href={`/blog/${id}`} className="w-full">
-          <Button className="w-full">Read More</Button>
-        </Link>
+        <Button className="w-full gap-1" asChild>
+          <Link href={`/blog/${id}`}>
+            <BookIcon className="w-4 h-4" />
+            Read more...
+          </Link>
+        </Button>
       </CardFooter>
     </Card>
   )
@@ -116,12 +120,12 @@ export async function FullArticle({
           <div className="flex justify-center mt-2">
             <Button
               variant="secondary"
-              className="w-96 flex justify-center items-end gap-1"
+              className="w-96 flex justify-center gap-1"
               asChild
             >
               <Link href="/">
-                <HomeIcon />
-                <h2>Home</h2>
+                <HomeIcon className="w-5 h-5" />
+                <h2 className="text-xl">Home</h2>
               </Link>
             </Button>
           </div>

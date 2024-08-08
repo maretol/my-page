@@ -1,7 +1,9 @@
 import { metadata } from '@/app/layout'
 import { getContent } from '@/lib/api/accessor'
 import { contentsAPIResult } from '@/lib/api/result'
+import { getHostname } from '@/lib/env'
 import { FullArticle } from '@/src/components/large/article'
+import { Metadata } from 'next'
 
 export const runtime = 'edge'
 
@@ -17,7 +19,13 @@ export async function generateMetadata({
     ...metadata,
     title: content.title + ' | Maretol Base',
     description: content.title,
-  }
+    openGraph: {
+      ...metadata.openGraph,
+      title: content.title + ' | Maretol Base',
+      description: content.title,
+      url: `${getHostname()}/blog/${articleID}`,
+    },
+  } as Metadata
 }
 
 export default async function BlogArticlePage({
@@ -26,7 +34,7 @@ export default async function BlogArticlePage({
   params: { article_id: string }
 }) {
   const articleID = params.article_id
-  const host = process.env.HOST
+  const host = getHostname()
   const path = `/blog/${articleID}`
   const url = `${host}${path}`
 

@@ -1,9 +1,9 @@
 import { HTMLRewriter } from 'htmlrewriter'
 
-const rewriter = new HTMLRewriter()
+const pageRewriter = new HTMLRewriter()
 
 // filenameの追加
-rewriter.on('div[data-filename]', {
+pageRewriter.on('div[data-filename]', {
   element(element: any) {
     const filename = element.getAttribute('data-filename')
     element.prepend(`<p class="code-filename">${filename}</p>`, {
@@ -13,7 +13,7 @@ rewriter.on('div[data-filename]', {
 })
 
 async function doRewrite(rawHTML: string) {
-  return await rewriter.transform(new Response(rawHTML)).text()
+  return await pageRewriter.transform(new Response(rawHTML)).text()
 }
 
 export { doRewrite }
