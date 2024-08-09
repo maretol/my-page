@@ -9,5 +9,13 @@ export async function GET(request: Request) {
     },
   }
 
-  return Response.json(nostrJSON)
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Max-Age': '86400',
+  }
+
+  return Response.json(nostrJSON, {
+    headers: { ...corsHeaders },
+  })
 }
