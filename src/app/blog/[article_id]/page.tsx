@@ -18,7 +18,7 @@ export async function generateMetadata({
   const sumnail =
     ogpImage === null || ogpImage === undefined
       ? ''
-      : 'https://www.maretol.xyz/cdn-cgi/image/w=100,h=100,f=webp,q=50/' +
+      : 'https://www.maretol.xyz/cdn-cgi/image/w=1200,h=630,f=webp,q=70/' +
         ogpImage
   const description = content.content
     .replaceAll(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
