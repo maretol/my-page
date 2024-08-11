@@ -6,8 +6,10 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
   const rdfTemplate = `<?xml version="1.0" encoding="UTF-8"?>`
   const host = getHostname()
+  const offset = 0
+  const limit = 20
 
-  const articles = await getContents()
+  const { contents: articles } = await getContents(offset, limit)
 
   const items = articles.map((article) => {
     return convertToRssItem(

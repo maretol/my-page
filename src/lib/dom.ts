@@ -1,11 +1,8 @@
 import { HTMLRewriter } from 'htmlrewriter'
+import { rewriteImageURL } from './image'
+import { defaultSandbox, imageOption, originImageOption } from './static'
 
 const pageRewriter = new HTMLRewriter()
-
-const defaultSandbox =
-  'allow-scripts allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-top-navigation'
-const imageOption = 'format=auto,h=500'
-const originImageOption = 'format=auto'
 
 pageRewriter
   .on('div[data-filename]', {
@@ -44,11 +41,8 @@ pageRewriter
         const t = text.text.split('.')
         const ext = t[t.length - 1]
         if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-          const imgSrc =
-            `https://www.maretol.xyz/cdn-cgi/image/${imageOption}/` + text.text
-          const originImgSrc =
-            `https://www.maretol.xyz/cdn-cgi/image/${originImageOption}/` +
-            text.text
+          const imgSrc = rewriteImageURL(imageOption, text.text)
+          const originImgSrc = rewriteImageURL(originImageOption, text.text)
           text.replace(
             `<a href=${originImgSrc}><img className="mrtl-img" src="${imgSrc}"></a>`,
             {

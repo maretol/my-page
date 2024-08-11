@@ -22,7 +22,7 @@ const customRequest: CustomRequestInit = {
   },
 }
 
-export async function getContents() {
+export async function getContents(offset: number, limit: number) {
   if (apiKey === undefined) {
     throw new Error('API_KEY is undefined')
   }
@@ -31,6 +31,7 @@ export async function getContents() {
     .getList<contentsAPIResult>({
       endpoint: 'contents',
       customRequestInit: customRequest,
+      queries: { offset: offset, limit: limit },
     })
     .then((res) => {
       return res
@@ -42,8 +43,9 @@ export async function getContents() {
   if (response === undefined) {
     throw new Error('api access error')
   }
+  const total = response.totalCount
 
-  return response.contents
+  return { contents: response.contents, total: total }
 }
 
 export async function getContent(articleID: string) {
@@ -93,15 +95,29 @@ export async function getTags() {
   return response.contents
 }
 
-export async function getContentsByTag(tagIDs: string[]) {
+export async function getContentsByTag(
+  tagIDs: string[],
+  offset: number,
+  limit: number,
+) {
   if (apiKey === undefined) {
     throw new Error('API_KEY is undefined')
   }
 
+  if (tagIDs.length === 0) {
+    return { contents: [], total: 0 }
+  }
+
+  const filters = tagIDs.map((id) => `categories[contains]${id}`)
+
   const response = await client
     .getList<contentsAPIResult>({
       endpoint: 'contents',
-      queries: { filters: `categories[contains]${tagIDs.join(',')}` },
+      queries: {
+        filters: `${filters.join('[and]')}`,
+        offset: offset,
+        limit: limit,
+      },
       customRequestInit: customRequest,
     })
     .then((res) => {
@@ -114,7 +130,7 @@ export async function getContentsByTag(tagIDs: string[]) {
   if (response === undefined) {
     throw new Error('api access error')
   }
-  return response.contents
+  return { contents: response.contents, total: response.totalCount }
 }
 
 export async function getInfo() {
