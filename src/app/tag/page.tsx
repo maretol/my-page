@@ -1,9 +1,10 @@
 import { getContentsByTag, getTags } from '@/lib/api/accessor'
 import { Article } from '@/src/components/large/article'
-import { Button } from '@/src/components/ui/button'
-import Link from 'next/link'
 import { metadata } from '../layout'
 import { getHostname } from '@/lib/env'
+import { pageLimit } from '@/lib/static'
+import TagSelector from '@/src/components/middle/tagsearch'
+import Pagenation from '@/src/components/middle/pagenation'
 
 export const runtime = 'edge'
 
@@ -13,14 +14,7 @@ export async function generateMetadata({
   searchParams: { [key: string]: string | string[] | undefined }
 }) {
   const rawTagIDs = searchParams['tag_id']
-  let tagIDs: string[] = []
-  if (rawTagIDs === undefined) {
-    tagIDs = []
-  } else if (typeof rawTagIDs === 'string') {
-    tagIDs = [rawTagIDs]
-  } else {
-    tagIDs = rawTagIDs
-  }
+  const tagIDs = getTagIDs(rawTagIDs)
 
   const tags = await getTags()
 
@@ -47,73 +41,28 @@ export default async function TagPage({
   searchParams: { [key: string]: string[] | string | undefined }
 }) {
   const rawTagIDs = searchParams['tag_id']
-  let tagIDs: string[] = []
-  if (rawTagIDs === undefined) {
-    tagIDs = []
-  } else if (typeof rawTagIDs === 'string') {
-    tagIDs = [rawTagIDs]
-  } else {
-    tagIDs = rawTagIDs
-  }
-
   const rawTagNames = searchParams['tag_name']
-  let tagNames: string[] = []
-  if (rawTagNames === undefined) {
-    tagNames = []
-  } else if (typeof rawTagNames === 'string') {
-    tagNames = [rawTagNames]
-  } else {
-    tagNames = rawTagNames
-  }
+  const page = searchParams['p']
+
+  const tagIDs = getTagIDs(rawTagIDs)
+  const tagNames = getTagNames(rawTagNames)
+  const pageNumber = getPageNumber(page)
+
+  const offset = (pageNumber - 1) * pageLimit
+  const limit = pageLimit
 
   const tags = await getTags()
 
-  const contents = await getContentsByTag(tagIDs)
+  const { contents, total } = await getContentsByTag(tagIDs, offset, limit)
 
   return (
     <div>
       <div>
         <div className="flex flex-row justify-left items-center mb-4">
           <div>
-            <h2>Tag : </h2>
+            <h2>Select tags : </h2>
           </div>
-          <div className="flex flex-row items-center ml-1 gap-x-1">
-            {tags.map((t, i) => {
-              const appendTagIDs = [...tagIDs, t.id]
-              const appendTagNames = [...tagNames, t.name]
-              const detachTagIDs = tagIDs.filter((id) => id !== t.id)
-              const detachTagNames = tagNames.filter((name) => name !== t.name)
-              return (
-                <div key={`tag-${i}`}>
-                  {tagIDs.includes(t.id) ? (
-                    <Link
-                      href={{
-                        pathname: '/tag',
-                        query: {
-                          tag_id: detachTagIDs,
-                          tag_name: detachTagNames,
-                        },
-                      }}
-                    >
-                      <Button disabled={tagIDs.includes(t.id)}>{t.name}</Button>
-                    </Link>
-                  ) : (
-                    <Link
-                      href={{
-                        pathname: '/tag',
-                        query: {
-                          tag_id: appendTagIDs,
-                          tag_name: appendTagNames,
-                        },
-                      }}
-                    >
-                      <Button disabled={tagIDs.includes(t.id)}>{t.name}</Button>
-                    </Link>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          <TagSelector tags={tags} tagIDs={tagIDs} tagNames={tagNames} />
         </div>
       </div>
       <div className="flex flex-col justify-center gap-10">
@@ -127,7 +76,45 @@ export default async function TagPage({
             rawContent={content.content}
           />
         ))}
+        <div className="flex justify-center">
+          <Pagenation
+            path="/tag"
+            queryWithoutPage={{ tag_id: tagIDs, tag_name: tagNames }}
+            currentPage={pageNumber}
+            totalPage={Math.ceil(total / limit)}
+          />
+        </div>
       </div>
     </div>
   )
+}
+
+function getTagIDs(rawTagIDs: string | string[] | undefined): string[] {
+  if (rawTagIDs === undefined) {
+    return []
+  } else if (typeof rawTagIDs === 'string') {
+    return [rawTagIDs]
+  } else {
+    return rawTagIDs
+  }
+}
+
+function getTagNames(rawTagNames: string | string[] | undefined): string[] {
+  if (rawTagNames === undefined) {
+    return []
+  } else if (typeof rawTagNames === 'string') {
+    return [rawTagNames]
+  } else {
+    return rawTagNames
+  }
+}
+
+function getPageNumber(page: string | string[] | undefined): number {
+  if (page === undefined) {
+    return 1
+  } else if (typeof page === 'string') {
+    return Number(page)
+  } else {
+    return 1
+  }
 }

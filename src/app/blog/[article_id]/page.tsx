@@ -2,6 +2,8 @@ import { metadata } from '@/app/layout'
 import { getContent } from '@/lib/api/accessor'
 import { contentsAPIResult } from '@/lib/api/result'
 import { getHostname } from '@/lib/env'
+import { rewriteImageURL } from '@/lib/image'
+import { ogpImageOption } from '@/lib/static'
 import { FullArticle } from '@/src/components/large/article'
 import { Metadata } from 'next'
 
@@ -18,8 +20,7 @@ export async function generateMetadata({
   const sumnail =
     ogpImage === null || ogpImage === undefined
       ? ''
-      : 'https://www.maretol.xyz/cdn-cgi/image/w=1200,h=630,f=webp,q=70/' +
-        ogpImage
+      : rewriteImageURL(ogpImageOption, ogpImage)
   const description = content.content
     .replaceAll(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
     .slice(0, 100)
