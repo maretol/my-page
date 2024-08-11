@@ -4,10 +4,12 @@ import type {
   categoryAPIResult,
   contentsAPIResult,
   infoAPIResult,
+  staticTextdata,
 } from './result'
-import { getCMSAPIKey } from '../env'
+import { getCMSAPIKey, getHostname, getNodeEnv } from '../env'
 
 const apiKey = getCMSAPIKey()
+const host = getHostname()
 
 const client = createClient({
   serviceDomain: 'maretol-blog',
@@ -137,4 +139,26 @@ export async function getInfo() {
   }
 
   return response.contents
+}
+
+export async function getTextdata() {
+  if (getNodeEnv() === 'development') {
+    const response = await fetch(`${host}/textdata.json`)
+      .then((res) => {
+        return res.json()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    return response as staticTextdata
+  }
+
+  const response = await fetch(`https://r2.maretol.xyz/static/textdata.json`)
+    .then((res) => {
+      return res.json()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  return response as staticTextdata
 }
