@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   description: 'Maretolのホームページ',
   openGraph: {
     title: 'Maretol Base',
-    description: 'Maretolのホームページ',
+    description: 'Maretolのホームページ | トップページ',
     type: 'website',
     url: getHostname(),
     siteName: 'Maretol Base',

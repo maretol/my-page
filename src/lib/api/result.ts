@@ -6,6 +6,7 @@ export type contentsAPIResult = {
   revisedAt: string
   title: string
   content: string
+  ogp_image: string | undefined | null
   categories: categoryAPIResult[]
   publish: boolean
 }
