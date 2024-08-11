@@ -14,6 +14,15 @@ export async function generateMetadata({
 }) {
   const articleID = params.article_id
   const content: contentsAPIResult = await getContent(articleID)
+  const ogpImage = content.ogp_image
+  const sumnail =
+    ogpImage === null || ogpImage === undefined
+      ? ''
+      : 'https://www.maretol.xyz/cdn-cgi/image/w=100,h=100,f=webp,q=50/' +
+        ogpImage
+  const description = content.content
+    .replaceAll(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
+    .slice(0, 100)
 
   return {
     ...metadata,
@@ -22,8 +31,9 @@ export async function generateMetadata({
     openGraph: {
       ...metadata.openGraph,
       title: content.title + ' | Maretol Base',
-      description: content.title,
+      description: description,
       url: `${getHostname()}/blog/${articleID}`,
+      images: [sumnail],
     },
   } as Metadata
 }
