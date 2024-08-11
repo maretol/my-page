@@ -53,12 +53,12 @@ export async function Article({
       </CardHeader>
       <CardContent className="relative">
         <div
-          className="space-y-5 content-sample line-clamp-6 "
+          className="space-y-5 content-sample line-clamp-6 max-h-72"
           dangerouslySetInnerHTML={{
             __html: contentHTML,
           }}
         ></div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t to-opacity-100 from-10% via-opacity-30 from-opacity-0" />
+        <div className="absolute p-6 pt-0 bottom-0 left-0 w-full h-24 bg-gradient-to-t to-opacity-100 from-opacity-0" />
       </CardContent>
       <CardFooter>
         <Button className="w-full gap-1" asChild>

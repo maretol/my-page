@@ -28,3 +28,7 @@ export type infoAPIResult = {
   page_pathname: string
   main_text: string
 }
+
+export type staticTextdata = {
+  footer: string
+}
