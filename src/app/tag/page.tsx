@@ -19,16 +19,17 @@ export async function generateMetadata({
   const tags = await getTags()
 
   const selectedTags = tags.filter((tag) => tagIDs.includes(tag.id))
+  const title = `タグ検索：${selectedTags
+    .map((t) => t.name)
+    .join(', ')} | Maretol Base`
+
   return {
-    title: `タグ検索：${selectedTags
-      .map((t) => t.name)
-      .join(', ')} | Maretol Base`,
+    title: title,
     description: 'タグ検索ページ',
+    robots: 'noindex',
     openGraph: {
       ...metadata.openGraph,
-      title: `タグ検索：${selectedTags
-        .map((t) => t.name)
-        .join(', ')} | Maretol Base`,
+      title: title,
       description: 'タグ検索ページ',
       url: getHostname() + '/tag',
     },
