@@ -14,6 +14,7 @@ import { Button } from '../ui/button'
 import ShareButton from '../small/share'
 import { BookIcon, HomeIcon } from 'lucide-react'
 import { doRewrite } from '@/lib/dom'
+import ArticleContent from '../middle/article_content'
 
 type ArticleProps = {
   id: string
@@ -103,12 +104,7 @@ export async function FullArticle({
         )}
       </CardHeader>
       <CardContent>
-        <div
-          className="space-y-5 content"
-          dangerouslySetInnerHTML={{
-            __html: contentHTML,
-          }}
-        />
+        <ArticleContent contentHTML={contentHTML} />
       </CardContent>
       <CardFooter>
         <div className="w-full">
