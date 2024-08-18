@@ -3,6 +3,7 @@ import P from './article_dom/p'
 import Hn from './article_dom/h'
 import ContentImage from './article_dom/image'
 import YouTubeArea from './article_dom/youtube'
+import TwitterArea from './article_dom/twitter'
 
 export default function ArticleContent({
   contentHTML,
@@ -62,7 +63,7 @@ export default function ArticleContent({
             text.indexOf('https://x.com/') === 0
           ) {
             // Twitterの埋め込み
-            return <p key={i}>これはTwitter : {text}</p>
+            return <TwitterArea key={i} twitterURL={text} />
           } else if (text.indexOf('https://') === 0) {
             // URLのみの場合、リンクカードに対応させる
             return <p key={i}>これはURL : {text}</p>

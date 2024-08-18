@@ -1,15 +1,14 @@
 import { defaultSandbox } from '@/lib/static'
 
 export default function YouTubeArea({ videoURL }: { videoURL: string }) {
-  const videoId = videoURL.match(
-    /(?:https:\/\/youtu.be\/|https:\/\/www.youtube.com\/watch\?v=)([a-zA-Z0-9_-]+)/,
-  )
-  if (!videoId) {
+  const youtubeURL = new URL(videoURL)
+  const videoID = youtubeURL.searchParams.get('v')
+  if (!videoID) {
     return <p>YouTubeの埋め込みがありましたがURLが不正ですなようです</p>
   }
   return (
     <iframe
-      src={`https://www.youtube.com/embed/${videoId[1]}`}
+      src={`https://www.youtube.com/embed/${videoID}`}
       frameBorder="0"
       sandbox={defaultSandbox}
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
