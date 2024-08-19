@@ -12,7 +12,15 @@ export default function ContentImage({
   const imageSrc = rewriteImageURL(imageOption, src)
 
   if (tag === 'content_image') {
-    return <Image src={imageSrc} alt="" width={300} height={400} />
+    return (
+      <Image
+        src={imageSrc}
+        alt=""
+        width={300}
+        height={400}
+        className="inner-image"
+      />
+    )
   } else if (tag === 'content_comic') {
     // 将来実装予定
     return <p>{src}</p>
