@@ -174,12 +174,15 @@ code {
     @apply w-auto;
     tbody {
       tr {
-        @apply border-b-2 border-gray-400;
+        @apply border-b-2 border-gray-600;
         td {
-          @apply pt-2 px-4 border-r border-gray-400;
+          @apply py-2 pr-6 pl-4 border-r border-gray-400;
         }
         th {
-          @apply pt-2 px-4 border-r border-gray-400;
+          @apply py-2 pr-6 pl-4 border-r border-gray-100 bg-gray-400;
+          p {
+            @apply font-bold;
+          }
         }
       }
     }

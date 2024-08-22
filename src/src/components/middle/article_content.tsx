@@ -19,14 +19,8 @@ export default function ArticleContent({
       {$('body > *').map((i, elem) => {
         const tagName = elem.tagName
         const attrs = elem.attribs
-        const attrStr = Object.keys(attrs).map((key) => {
-          return `${key}="${attrs[key]}"`
-        })
         const text = $(elem).text()
         const innerHTML = $(elem).html()
-
-        const firstChild = $(elem).children()
-        const firstChildTagName = firstChild[0]?.tagName
 
         // h1 ~ h5
         // 正規表現でヒットさせる
@@ -74,7 +68,7 @@ export default function ArticleContent({
             const [tag, src] = text.split(':::')
             return <ContentImage key={i} tag={tag} src={src} />
           } else if (isComic(text)) {
-            // 将来の実装：漫画系の場合、漫画ビューアを起動させる
+            // 漫画系の場合、漫画ビューアを混ぜたコンポーネントを表示
             const [tag, src] = text.split(':::')
             return <ContentImage key={i} tag={tag} src={src} />
           } else if (isYouTube(text)) {
@@ -92,19 +86,8 @@ export default function ArticleContent({
 
         return (
           <div key={i}>
-            <p key={i}>{'tagName: ' + tagName}</p>
-            <p key={i} className="pl-10">
-              {'attrStr: ' + attrStr}
-            </p>
-            <p key={i} className="pl-10">
-              {'text: ' + text}
-            </p>
-            <p key={i} className="pl-10">
-              {'innerHTML: ' + innerHTML}
-            </p>
-            <p key={i} className="pl-10">
-              {'firstChildTagName: ' + firstChildTagName}
-            </p>
+            <p>known tag error : {tagName}</p>
+            <div dangerouslySetInnerHTML={{ __html: innerHTML || '' }} />
           </div>
         )
       })}

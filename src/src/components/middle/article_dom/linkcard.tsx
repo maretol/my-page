@@ -45,18 +45,21 @@ export default async function LinkCard({ link }: { link: string }) {
   const image = ogpImage !== '' ? ogpImage : '' // noimageを用意する
 
   return (
-    <div className="shadow-md max-w-xl h-100">
-      <a href={ogpUrl} target="_blank" rel="noopener noreferrer">
-        <div className="flex flex-row">
+    <div className="max-w-xl h-100 no-underline border-2">
+      <a href={ogpUrl} target="_blank" className="hover:no-underline">
+        <div className="flex flex-row h-24">
           <div className="row-span-3 w-36 h-24">
             <Image src={image} alt={ogpTitle} width={150} height={150} />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-2 m-2">
             <h3>{title}</h3>
             <p className="line-clamp-3">{ogpDescription}</p>
           </div>
         </div>
-        <p className="p-1 bg-gray-200">{site}</p>
+        <div className="p-1 bg-gray-200">
+          <p className="no-underline text-sm line-clamp-1">{site}</p>
+          <p className="no-underline text-sm line-clamp-1">{link}</p>
+        </div>
       </a>
     </div>
   )
