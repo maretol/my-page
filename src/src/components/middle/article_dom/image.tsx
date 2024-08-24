@@ -1,6 +1,6 @@
 import { rewriteImageURL } from '@/lib/image'
 import { imageOption } from '@/lib/static'
-import Image from 'next/image'
+import ClientImage from '../../small/client_image'
 
 export default function ContentImage({
   tag,
@@ -14,7 +14,7 @@ export default function ContentImage({
   if (tag === 'content_image') {
     return (
       // ここに画像のモーダルを実装する
-      <Image
+      <ClientImage
         src={imageSrc}
         alt=""
         width={300}
