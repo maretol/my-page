@@ -8,10 +8,9 @@ import { Button } from '@/src/components/ui/button'
 import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
 import Script from 'next/script'
-import { getHostname, getNodeEnv } from '@/lib/env'
+import { getHostname } from '@/lib/env'
 import Image from 'next/image'
-import { rewriteImageURL } from '@/lib/image'
-import { originImageOption } from '@/lib/static'
+import { getHeaderImage, getOGPImage } from '@/lib/image'
 
 export const runtime = 'edge'
 
@@ -89,22 +88,5 @@ export default async function RootLayout({
         </div>
       </body>
     </html>
-  )
-}
-
-function getHeaderImage() {
-  const prdHeaderImage = rewriteImageURL(
-    originImageOption,
-    'https://r2.maretol.xyz/assets/maretol_base_header.png',
-  )
-  const headerImage =
-    getNodeEnv() === 'production' ? prdHeaderImage : '/image/maretol_base.png'
-  return headerImage
-}
-
-export function getOGPImage() {
-  return rewriteImageURL(
-    originImageOption,
-    'https://r2.maretol.xyz/assets/maretol_base_ogp.png',
   )
 }
