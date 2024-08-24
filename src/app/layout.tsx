@@ -8,7 +8,10 @@ import { Button } from '@/src/components/ui/button'
 import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
 import Script from 'next/script'
-import { getHostname } from '@/lib/env'
+import { getHostname, getNodeEnv } from '@/lib/env'
+import Image from 'next/image'
+import { rewriteImageURL } from '@/lib/image'
+import { originImageOption } from '@/lib/static'
 
 export const runtime = 'edge'
 
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: getHostname(),
     siteName: 'Maretol Base',
-    images: [],
+    images: [getOGPImage()],
   },
 }
 
@@ -40,6 +43,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const headerImage = getHeaderImage()
+
   return (
     <html lang="ja">
       <Script
@@ -55,12 +60,17 @@ export default async function RootLayout({
         <div className="flex justify-center pb-10" id="top">
           <div className="max-w-[1500px] w-full sm:mx-6">
             <div className="my-10">
-              <div className="mb-2">
-                <Link href="/">
-                  <Button variant={'link'}>
-                    <h1 className="">Maretol Base</h1>
-                  </Button>
-                </Link>
+              <div className="mb-2 pt-2">
+                <Button variant={'link'} className="p-0" asChild>
+                  <Link href="/">
+                    <Image
+                      src={headerImage}
+                      width={500}
+                      height={200}
+                      alt="Maretol Base"
+                    />
+                  </Link>
+                </Button>
               </div>
               <HeaderButtons />
             </div>
@@ -79,5 +89,22 @@ export default async function RootLayout({
         </div>
       </body>
     </html>
+  )
+}
+
+function getHeaderImage() {
+  const prdHeaderImage = rewriteImageURL(
+    originImageOption,
+    'https://r2.maretol.xyz/statics/maretol_base_header.png',
+  )
+  const headerImage =
+    getNodeEnv() === 'production' ? prdHeaderImage : '/image/maretol_base.png'
+  return headerImage
+}
+
+export function getOGPImage() {
+  return rewriteImageURL(
+    originImageOption,
+    'https://r2.maretol.xyz/assets/maretol_base_ogp.png',
   )
 }

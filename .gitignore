@@ -40,3 +40,7 @@ next-env.d.ts
 
 # test page
 **/test/**
+
+# public の画像ソース
+# サーバでは r2 リソースを使用する。ローカルでのみ利用
+/public/image/**

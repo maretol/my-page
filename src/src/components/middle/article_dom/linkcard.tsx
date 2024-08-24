@@ -1,11 +1,13 @@
+import { rewriteImageURL } from '@/lib/image'
+import { originImageOption } from '@/lib/static'
 import { load } from 'cheerio'
 import Image from 'next/image'
 
 export default async function LinkCard({ link }: { link: string }) {
-  let headerTitle = ''
+  let headerTitle = 'No Page Title'
   let ogpTitle = ''
   let ogpDescription = ''
-  let ogpImage = ''
+  let ogpImage = getNoImage()
   let ogpUrl = ''
   let ogpSite = ''
   try {
@@ -42,18 +44,24 @@ export default async function LinkCard({ link }: { link: string }) {
 
   const title = ogpTitle !== '' ? ogpTitle : headerTitle
   const site = ogpSite !== '' ? ogpSite : title
-  const image = ogpImage !== '' ? ogpImage : '' // noimageを用意する
+  const image = ogpImage
 
   return (
     <div className="max-w-xl h-100 no-underline border-2">
       <a href={ogpUrl} target="_blank" className="hover:no-underline">
         <div className="flex flex-row h-24">
           <div className="row-span-3 w-36 h-24">
-            <Image src={image} alt={ogpTitle} width={150} height={150} />
+            <Image
+              src={image}
+              alt={ogpTitle}
+              width={200}
+              height={200}
+              className="object-contain w-36 h-24"
+            />
           </div>
-          <div className="col-span-2 m-2">
-            <h3>{title}</h3>
-            <p className="line-clamp-3">{ogpDescription}</p>
+          <div className="col-span-2 m-1 w-96">
+            <h3 className="text-lg">{title}</h3>
+            <p className="text-sm line-clamp-3">{ogpDescription}</p>
           </div>
         </div>
         <div className="p-1 bg-gray-200">
@@ -62,5 +70,12 @@ export default async function LinkCard({ link }: { link: string }) {
         </div>
       </a>
     </div>
+  )
+}
+
+function getNoImage() {
+  return rewriteImageURL(
+    originImageOption,
+    'https://r2.maretol.xyz/assets/no_image.png',
   )
 }
