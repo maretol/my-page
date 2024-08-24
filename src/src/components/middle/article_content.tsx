@@ -7,6 +7,7 @@ import TwitterArea from './article_dom/twitter'
 import Div from './article_dom/div'
 import LinkCard from './article_dom/linkcard'
 import { cn } from '@/src/lib/utils'
+import Br from './article_dom/br'
 
 export default function ArticleContent({
   contentHTML,
@@ -93,6 +94,9 @@ export default function ArticleContent({
           } else if (isURL(text)) {
             // URLのみの場合、リンクカードに対応させる
             return <LinkCard key={i} link={text} />
+          } else if (text === '') {
+            // 空行の場合。改行をいれる
+            return <Br key={i} />
           }
           return <P key={i} innerHTML={innerHTML || text} attrs={attrs} />
         }
