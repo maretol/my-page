@@ -1,11 +1,12 @@
 import { FacebookIcon, TwitterIcon, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import ShareCopyAndPasteButton from './share_client'
 
 const titleFormat = '${title} | Maretol Base'
 
 export default function ShareButton(props: {
-  variant: 'twitter' | 'x' | 'facebook'
+  variant: 'twitter' | 'x' | 'facebook' | 'copy_and_paste'
   url: string
   title: string
 }) {
@@ -15,6 +16,8 @@ export default function ShareButton(props: {
     return <ShareXButton {...props} />
   } else if (props.variant === 'facebook') {
     return <ShareFacebookButton {...props} />
+  } else if (props.variant === 'copy_and_paste') {
+    return <ShareCopyAndPasteButton {...props} />
   } else {
     return <div></div>
   }

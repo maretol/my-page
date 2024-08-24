@@ -1,6 +1,6 @@
 import { HTMLRewriter } from 'htmlrewriter'
-import { rewriteImageURL } from './image'
-import { defaultSandbox, imageOption, originImageOption } from './static'
+import { defaultSandbox } from './static'
+import { load } from 'cheerio'
 
 const pageRewriter = new HTMLRewriter()
 
@@ -41,14 +41,10 @@ pageRewriter
         const t = text.text.split('.')
         const ext = t[t.length - 1]
         if (['png', 'jpg', 'jpeg', 'gif'].includes(ext)) {
-          const imgSrc = rewriteImageURL(imageOption, text.text)
-          const originImgSrc = rewriteImageURL(originImageOption, text.text)
-          text.replace(
-            `<a href=${originImgSrc}><img className="mrtl-img" src="${imgSrc}"></a>`,
-            {
-              html: true,
-            },
-          )
+          const tagText = 'content_image:::' + text.text
+          text.replace(tagText, {
+            html: false,
+          })
         }
       }
     },
@@ -58,4 +54,9 @@ async function doRewrite(rawHTML: string) {
   return await pageRewriter.transform(new Response(rawHTML)).text()
 }
 
-export { doRewrite }
+async function parseHTML(rawHTML: string) {
+  const $ = load(rawHTML)
+  return $
+}
+
+export { doRewrite, parseHTML }

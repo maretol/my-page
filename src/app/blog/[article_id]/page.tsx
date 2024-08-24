@@ -1,4 +1,4 @@
-import { metadata } from '@/app/layout'
+import { getOGPImage, metadata } from '@/app/layout'
 import { getContent } from '@/lib/api/accessor'
 import { contentsAPIResult } from '@/lib/api/result'
 import { getHostname } from '@/lib/env'
@@ -19,7 +19,7 @@ export async function generateMetadata({
   const ogpImage = content.ogp_image
   const sumnail =
     ogpImage === null || ogpImage === undefined
-      ? ''
+      ? getOGPImage()
       : rewriteImageURL(ogpImageOption, ogpImage)
   const description = content.content
     .replaceAll(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
