@@ -1,7 +1,7 @@
 import { rewriteImageURL } from '@/lib/image'
 import { originImageOption } from '@/lib/static'
 import { load } from 'cheerio'
-import Image from 'next/image'
+import ClientImage from '../../small/client_image'
 
 export default async function LinkCard({ link }: { link: string }) {
   let headerTitle = 'No Page Title'
@@ -51,7 +51,7 @@ export default async function LinkCard({ link }: { link: string }) {
       <a href={ogpUrl} target="_blank" className="hover:no-underline">
         <div className="flex flex-row h-24">
           <div className="row-span-3 w-36 h-24">
-            <Image
+            <ClientImage
               src={image}
               alt={ogpTitle}
               width={200}
@@ -60,7 +60,7 @@ export default async function LinkCard({ link }: { link: string }) {
             />
           </div>
           <div className="col-span-2 m-1 w-96">
-            <h3 className="text-lg">{title}</h3>
+            <h3 className="text-lg line-clamp-1">{title}</h3>
             <p className="text-sm line-clamp-3">{ogpDescription}</p>
           </div>
         </div>
