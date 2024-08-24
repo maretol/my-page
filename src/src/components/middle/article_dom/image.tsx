@@ -13,6 +13,7 @@ export default function ContentImage({
 
   if (tag === 'content_image') {
     return (
+      // ここに画像のモーダルを実装する
       <Image
         src={imageSrc}
         alt=""

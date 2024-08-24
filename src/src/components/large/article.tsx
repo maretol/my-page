@@ -53,12 +53,7 @@ export async function Article({
         </CardContent>
       </CardHeader>
       <CardContent className="relative">
-        <div
-          className="space-y-5 content-sample line-clamp-6 max-h-72"
-          dangerouslySetInnerHTML={{
-            __html: contentHTML,
-          }}
-        ></div>
+        <ArticleContent contentHTML={contentHTML} sample />
         <div className="absolute p-6 pt-0 bottom-0 left-0 w-full h-24 bg-gradient-to-t to-opacity-100 from-opacity-0" />
       </CardContent>
       <CardFooter>
@@ -112,6 +107,11 @@ export async function FullArticle({
             <p>Share : </p>
             <ShareButton variant="twitter" url={shareURL} title={title} />
             <ShareButton variant="facebook" url={shareURL} title={title} />
+            <ShareButton
+              variant="copy_and_paste"
+              url={shareURL}
+              title={title}
+            />
           </div>
           <div className="flex justify-center mt-2">
             <Button

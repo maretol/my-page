@@ -6,17 +6,30 @@ import YouTubeArea from './article_dom/youtube'
 import TwitterArea from './article_dom/twitter'
 import Div from './article_dom/div'
 import LinkCard from './article_dom/linkcard'
+import { cn } from '@/src/lib/utils'
 
 export default function ArticleContent({
   contentHTML,
+  sample,
 }: {
   contentHTML: string
+  sample?: boolean
 }) {
   const $ = load(contentHTML)
+  const sampleFlag = sample || false
+
+  const sampleClassName = 'content-sample line-clamp-6 max-h-72'
+  const contentClassName = 'content'
+
+  const className = sampleFlag ? sampleClassName : contentClassName
 
   return (
-    <div className="space-y-9 content">
+    <div className={cn('space-y-5', className)}>
       {$('body > *').map((i, elem) => {
+        // sampleの場合はコンテンツは6つまででいい
+        if (sampleFlag && i > 5) {
+          return
+        }
         const tagName = elem.tagName
         const attrs = elem.attribs
         const text = $(elem).text()

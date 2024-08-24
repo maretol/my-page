@@ -95,7 +95,7 @@ export default async function RootLayout({
 function getHeaderImage() {
   const prdHeaderImage = rewriteImageURL(
     originImageOption,
-    'https://r2.maretol.xyz/statics/maretol_base_header.png',
+    'https://r2.maretol.xyz/assets/maretol_base_header.png',
   )
   const headerImage =
     getNodeEnv() === 'production' ? prdHeaderImage : '/image/maretol_base.png'
