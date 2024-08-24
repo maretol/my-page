@@ -25,6 +25,7 @@ export default function ClientImage({
     <Image
       loader={imageLoader}
       src={src}
+      unoptimized={true}
       alt={alt}
       width={width}
       height={height}
