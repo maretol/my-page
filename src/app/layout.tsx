@@ -9,8 +9,8 @@ import FooterButtons from '@/src/components/small/footer'
 import HeaderButtons from '@/src/components/small/header'
 import Script from 'next/script'
 import { getHostname } from '@/lib/env'
-import Image from 'next/image'
 import { getHeaderImage, getOGPImage } from '@/lib/image'
+import ClientImage from '@/src/components/small/client_image'
 
 export const runtime = 'edge'
 
@@ -62,7 +62,7 @@ export default async function RootLayout({
               <div className="mb-2 pt-2">
                 <Button variant={'link'} className="p-0" asChild>
                   <Link href="/">
-                    <Image
+                    <ClientImage
                       src={headerImage}
                       width={500}
                       height={200}
