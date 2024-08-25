@@ -48,7 +48,7 @@ export async function getContents(offset: number, limit: number) {
   return { contents: response.contents, total: total }
 }
 
-export async function getContent(articleID: string) {
+export async function getContent(articleID: string, draftKey?: string) {
   if (apiKey === undefined) {
     throw new Error('API_KEY is undefined')
   }
@@ -56,7 +56,7 @@ export async function getContent(articleID: string) {
   const response = await client
     .getList<contentsAPIResult>({
       endpoint: 'contents',
-      queries: { ids: articleID },
+      queries: { ids: articleID, draftKey: draftKey },
       customRequestInit: customRequest,
     })
     .then((res) => {
