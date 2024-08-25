@@ -11,7 +11,7 @@ export default function ShareCopyAndPasteButton({
   url: string
   title: string
 }) {
-  const text = `${title}\n${url}`
+  const text = `${title} | Maretol Base\n${url}`
   const [clicked, setClicked] = useState(false)
   const onClick = () => {
     navigator.clipboard.writeText(text)
