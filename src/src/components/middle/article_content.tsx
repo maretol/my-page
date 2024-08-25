@@ -8,6 +8,7 @@ import Div from './article_dom/div'
 import LinkCard from './article_dom/linkcard'
 import { cn } from '@/src/lib/utils'
 import Br from './article_dom/br'
+import Blockquote from './article_dom/blockquote'
 
 export default function ArticleContent({
   contentHTML,
@@ -73,6 +74,11 @@ export default function ArticleContent({
           return (
             <ol key={i} dangerouslySetInnerHTML={{ __html: innerHTML || '' }} />
           )
+        }
+
+        // blockquote
+        if (tagName === 'blockquote') {
+          return <Blockquote key={i} innerHTML={innerHTML || ''} />
         }
 
         // p
