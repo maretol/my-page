@@ -11,11 +11,15 @@ export const runtime = 'edge'
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: { article_id: string }
+  searchParams: { [key: string]: string | undefined }
 }) {
   const articleID = params.article_id
-  const content: contentsAPIResult = await getContent(articleID)
+  const draftKey = searchParams['draftKey']
+
+  const content: contentsAPIResult = await getContent(articleID, draftKey)
   const ogpImage = content.ogp_image
   const sumnail =
     ogpImage === null || ogpImage === undefined
@@ -41,15 +45,19 @@ export async function generateMetadata({
 
 export default async function BlogArticlePage({
   params,
+  searchParams,
 }: {
   params: { article_id: string }
+  searchParams: { [key: string]: string | undefined }
 }) {
   const articleID = params.article_id
+  const draftKey = searchParams['draftKey']
+
   const host = getHostname()
   const path = `/blog/${articleID}`
   const url = `${host}${path}`
 
-  const content: contentsAPIResult = await getContent(articleID)
+  const content: contentsAPIResult = await getContent(articleID, draftKey)
 
   return (
     <div>
