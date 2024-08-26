@@ -27,6 +27,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: 'Maretol Base',
   description: 'Maretolのホームページ',
+  twitter: {
+    title: 'Maretol Base',
+    description: 'Maretolのホームページ | トップページ',
+    card: 'summary',
+    images: [getOGPImage()],
+  },
   openGraph: {
     title: 'Maretol Base',
     description: 'Maretolのホームページ | トップページ',
@@ -45,7 +51,7 @@ export default async function RootLayout({
   const headerImage = getHeaderImage()
 
   return (
-    <html lang="ja">
+    <html lang="ja" prefix="og: http://ogp.me/ns#">
       <Script
         src="https://static.cloudflareinsights.com/beacon.min.js"
         data-cf-beacon='{"token": "e7ad45139e61492b95a8686432f438e4"}'
