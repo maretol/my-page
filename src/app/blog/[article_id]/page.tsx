@@ -28,11 +28,22 @@ export async function generateMetadata({
   const description = content.content
     .replaceAll(/<("[^"]*"|'[^']*'|[^'">])*>/g, '')
     .slice(0, 100)
+  const twitterCard =
+    ogpImage === null || ogpImage === undefined
+      ? 'summary'
+      : 'summary_large_image'
 
   return {
     ...metadata,
     title: content.title + ' | Maretol Base',
     description: content.title,
+    twitter: {
+      ...metadata.twitter,
+      card: twitterCard,
+      title: content.title + ' | Maretol Base',
+      description: description,
+      images: [sumnail],
+    },
     openGraph: {
       ...metadata.openGraph,
       title: content.title + ' | Maretol Base',
