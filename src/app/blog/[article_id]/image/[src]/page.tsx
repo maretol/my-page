@@ -75,7 +75,7 @@ export default async function ImagePage({
     <div>
       <ImageArticle
         id={content.id}
-        title={content.title}
+        title={`IMAGE: ${content.title}`}
         imageSrc={imageSrc}
         rawContent={''}
         shareURL={shareURL}
