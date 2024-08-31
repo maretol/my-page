@@ -53,7 +53,7 @@ export async function Article({
         </CardContent>
       </CardHeader>
       <CardContent className="relative">
-        <ArticleContent contentHTML={contentHTML} sample />
+        <ArticleContent contentHTML={contentHTML} sample articleID={id} />
         <div className="absolute p-6 pt-0 bottom-0 left-0 w-full h-24 bg-gradient-to-t to-opacity-100 from-opacity-0" />
       </CardContent>
       <CardFooter>
@@ -69,6 +69,7 @@ export async function Article({
 }
 
 export async function FullArticle({
+  id,
   title,
   createdAt,
   updatedAt,
@@ -99,7 +100,7 @@ export async function FullArticle({
         )}
       </CardHeader>
       <CardContent>
-        <ArticleContent contentHTML={contentHTML} />
+        <ArticleContent contentHTML={contentHTML} articleID={id} />
       </CardContent>
       <CardFooter>
         <div className="w-full">

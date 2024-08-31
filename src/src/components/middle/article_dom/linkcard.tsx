@@ -47,7 +47,7 @@ export default async function LinkCard({ link }: { link: string }) {
   const image = ogpImage
 
   return (
-    <div className="max-w-xl h-100 no-underline border-2 border-gray-500 rounded-md">
+    <div className="max-w-xl h-100 no-underline border-2 border-gray-300 rounded-md">
       <a href={ogpUrl} target="_blank" className="hover:no-underline">
         <div className="flex flex-row h-24">
           <div className="row-span-3 w-36 h-24">
@@ -64,7 +64,7 @@ export default async function LinkCard({ link }: { link: string }) {
             <p className="text-sm line-clamp-3">{ogpDescription}</p>
           </div>
         </div>
-        <div className="p-1 bg-gray-200 rounded-b-md">
+        <div className="p-1 bg-gray-300 rounded-b-md">
           <p className="no-underline text-sm line-clamp-1">{site}</p>
           <p className="no-underline text-sm line-clamp-1">{link}</p>
         </div>

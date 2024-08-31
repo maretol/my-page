@@ -12,9 +12,11 @@ import Blockquote from './article_dom/blockquote'
 
 export default function ArticleContent({
   contentHTML,
+  articleID,
   sample,
 }: {
   contentHTML: string
+  articleID: string
   sample?: boolean
 }) {
   const $ = load(contentHTML)
@@ -86,11 +88,15 @@ export default function ArticleContent({
           if (isImage(text)) {
             // 自前の画像URLを画像系コンポーネントで表示
             const [tag, src] = text.split(':::')
-            return <ContentImage key={i} tag={tag} src={src} />
+            return (
+              <ContentImage key={i} tag={tag} src={src} articleID={articleID} />
+            )
           } else if (isComic(text)) {
             // 漫画系の場合、漫画ビューアを混ぜたコンポーネントを表示
             const [tag, src] = text.split(':::')
-            return <ContentImage key={i} tag={tag} src={src} />
+            return (
+              <ContentImage key={i} tag={tag} src={src} articleID={articleID} />
+            )
           } else if (isYouTube(text)) {
             // YouTubeの埋め込み
             return <YouTubeArea key={i} videoURL={text} />
