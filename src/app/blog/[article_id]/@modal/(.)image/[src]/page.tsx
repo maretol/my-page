@@ -1,4 +1,6 @@
+import { rewriteImageURL } from '@/lib/image'
 import Modal from './modal'
+import { originImageOption } from '@/lib/static'
 
 // パラレルルート・セマンティクスルート機能で、ブログ内から画像をクリックしたときはこのモーダルが表示される
 export default function ImageModal({
@@ -6,5 +8,8 @@ export default function ImageModal({
 }: {
   params: { article_id: string; src: string }
 }) {
-  return <Modal imageSrc={params.src} />
+  const imageSrcBase64 = decodeURIComponent(params.src)
+  const imageSrc = Buffer.from(imageSrcBase64, 'base64').toString('utf-8')
+  const rewrittenImageSrc = rewriteImageURL(originImageOption, imageSrc)
+  return <Modal imageSrc={rewrittenImageSrc} />
 }

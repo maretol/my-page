@@ -167,7 +167,7 @@ export function ImageArticle({
             alt={title}
             width={800}
             height={800}
-            className=" shadow-lg"
+            className="w-full h-full shadow-lg"
           />
         </div>
         <div className="my-8 flex justify-center">
