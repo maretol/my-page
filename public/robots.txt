@@ -5,6 +5,7 @@ Disallow: /_next/
 
 User-agent: Twitterbot
 Disallow: /.well-known/
+Allow: /cdn-cgi/
 Disallow: /_next
 
 User-agent: *
