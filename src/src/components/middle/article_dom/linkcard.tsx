@@ -1,7 +1,7 @@
 import { rewriteImageURL } from '@/lib/image'
 import { originImageOption } from '@/lib/static'
-import { load } from 'cheerio'
 import ClientImage from '../../small/client_image'
+import { getOGPData } from '@/lib/ogp/accessor'
 
 export default async function LinkCard({ link }: { link: string }) {
   let headerTitle = 'No Page Title'
@@ -10,34 +10,16 @@ export default async function LinkCard({ link }: { link: string }) {
   let ogpImage = getNoImage()
   let ogpUrl = ''
   let ogpSite = ''
-  try {
-    const linkResult = await fetch(link)
 
-    const parsed = load(await linkResult.text())
+  const linkResult = await getOGPData(link)
 
-    parsed('head title').each((_, elem) => {
-      headerTitle = parsed(elem).text()
-    })
-
-    parsed('head > meta').each((_, elem) => {
-      if (parsed(elem).attr('property') === 'og:title') {
-        ogpTitle = parsed(elem).attr('content') || ''
-      }
-      if (parsed(elem).attr('property') === 'og:description') {
-        ogpDescription = parsed(elem).attr('content') || ''
-      }
-      if (parsed(elem).attr('property') === 'og:image') {
-        ogpImage = parsed(elem).attr('content') || ''
-      }
-      if (parsed(elem).attr('property') === 'og:url') {
-        ogpUrl = parsed(elem).attr('content') || ''
-      }
-      if (parsed(elem).attr('property') === 'og:site_name') {
-        ogpSite = parsed(elem).attr('content') || ''
-      }
-    })
-  } catch (e) {
-    console.error(e)
+  if (linkResult.success) {
+    ogpTitle = linkResult.og_title
+    ogpDescription = linkResult.og_description
+    ogpImage = linkResult.og_image
+    ogpUrl = linkResult.og_url
+    ogpSite = linkResult.og_site_name
+  } else {
     ogpTitle = 'Error'
     ogpDescription = 'エラーが発生しました。データを表示できません。'
   }
@@ -47,7 +29,7 @@ export default async function LinkCard({ link }: { link: string }) {
   const image = ogpImage
 
   return (
-    <div className="max-w-xl h-100 no-underline border-2 border-gray-500 rounded-md">
+    <div className="max-w-xl h-100 no-underline border-2 border-gray-300 rounded-md">
       <a href={ogpUrl} target="_blank" className="hover:no-underline">
         <div className="flex flex-row h-24">
           <div className="row-span-3 w-36 h-24">
@@ -64,7 +46,7 @@ export default async function LinkCard({ link }: { link: string }) {
             <p className="text-sm line-clamp-3">{ogpDescription}</p>
           </div>
         </div>
-        <div className="p-1 bg-gray-200 rounded-b-md">
+        <div className="p-1 bg-gray-300 rounded-b-md">
           <p className="no-underline text-sm line-clamp-1">{site}</p>
           <p className="no-underline text-sm line-clamp-1">{link}</p>
         </div>
