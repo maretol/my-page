@@ -32,7 +32,7 @@ async function workerParseCMSData(cmsContent: string) {
   const apiKey = getCMSParserAPIKey()
   const headers = { 'Content-Type': 'application/json', 'x-api-key': apiKey }
   const body = JSON.stringify({ cms_content: cmsContent })
-  const req = new Request('https://www.maretol.xyz/api/cms-data-parser', {
+  const req = new Request('https://cms-data-parser.maretol-ruha.workers.dev/', {
     headers,
     method: 'POST',
     body,
