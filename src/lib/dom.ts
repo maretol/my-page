@@ -1,6 +1,5 @@
 import { HTMLRewriter } from 'htmlrewriter'
 import { defaultSandbox } from './static'
-import { load } from 'cheerio'
 
 const pageRewriter = new HTMLRewriter()
 
@@ -54,9 +53,4 @@ async function doRewrite(rawHTML: string) {
   return await pageRewriter.transform(new Response(rawHTML)).text()
 }
 
-async function parseHTML(rawHTML: string) {
-  const $ = load(rawHTML)
-  return $
-}
-
-export { doRewrite, parseHTML }
+export { doRewrite }

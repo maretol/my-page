@@ -1,4 +1,3 @@
-import { load } from 'cheerio'
 import P from './article_dom/p'
 import Hn from './article_dom/h'
 import ContentImage from './article_dom/image'
@@ -9,8 +8,9 @@ import LinkCard from './article_dom/linkcard'
 import { cn } from '@/src/lib/utils'
 import Br from './article_dom/br'
 import Blockquote from './article_dom/blockquote'
+import { parseCMSData } from '@/lib/parser/accessor'
 
-export default function ArticleContent({
+export default async function ArticleContent({
   contentHTML,
   articleID,
   sample,
@@ -19,25 +19,24 @@ export default function ArticleContent({
   articleID: string
   sample?: boolean
 }) {
-  const $ = load(contentHTML)
-  const sampleFlag = sample || false
+  const parsed = await parseCMSData(contentHTML)
 
+  const sampleFlag = sample || false
   const sampleClassName = 'content-sample line-clamp-6 max-h-72'
   const contentClassName = 'content'
-
   const className = sampleFlag ? sampleClassName : contentClassName
 
   return (
     <div className={cn('space-y-5', className)}>
-      {$('body > *').map((i, elem) => {
+      {parsed.map((elem, i) => {
         // sampleの場合はコンテンツは6つまででいい
         if (sampleFlag && i > 5) {
           return
         }
-        const tagName = elem.tagName
-        const attrs = elem.attribs
-        const text = $(elem).text()
-        const innerHTML = $(elem).html()
+        const tagName = elem.tag_name
+        const attrs = elem.attributes
+        const text = elem.text
+        const innerHTML = elem.inner_html
 
         // h1 ~ h5
         // 正規表現でヒットさせる
@@ -85,31 +84,37 @@ export default function ArticleContent({
 
         // p
         if (tagName === 'p') {
-          if (isImage(text)) {
+          const pOption = elem.p_option
+          if (pOption === null || pOption === 'normal') {
+            // 本来 p タグは p_option が入っているが、万が一の場合の抜け道
+            // 通常テキストの場合と同じ扱い
+            return <P key={i} innerHTML={innerHTML || text} attrs={attrs} />
+          } else if (pOption === 'image') {
             // 自前の画像URLを画像系コンポーネントで表示
             const [tag, src] = text.split(':::')
             return (
               <ContentImage key={i} tag={tag} src={src} articleID={articleID} />
             )
-          } else if (isComic(text)) {
+          } else if (pOption === 'comic') {
             // 漫画系の場合、漫画ビューアを混ぜたコンポーネントを表示
             const [tag, src] = text.split(':::')
             return (
               <ContentImage key={i} tag={tag} src={src} articleID={articleID} />
             )
-          } else if (isYouTube(text)) {
+          } else if (pOption === 'youtube') {
             // YouTubeの埋め込み
             return <YouTubeArea key={i} videoURL={text} />
-          } else if (isTwitter(text)) {
+          } else if (pOption === 'twitter') {
             // Twitterの埋め込み
             return <TwitterArea key={i} twitterURL={text} />
-          } else if (isURL(text)) {
+          } else if (pOption === 'url') {
             // URLのみの場合、リンクカードに対応させる
             return <LinkCard key={i} link={text} />
-          } else if (text === '') {
+          } else if (pOption === 'empty') {
             // 空行の場合。改行をいれる
             return <Br key={i} />
           }
+          // どれにも該当しない場合。ほぼないはずだが、新規の p_option が追加された場合必要になる
           return <P key={i} innerHTML={innerHTML || text} attrs={attrs} />
         }
 
@@ -122,31 +127,4 @@ export default function ArticleContent({
       })}
     </div>
   )
-}
-
-function isImage(text: string) {
-  return text.indexOf('content_image:::') === 0
-}
-
-function isComic(text: string) {
-  return text.indexOf('content_comic:::') === 0
-}
-
-function isYouTube(text: string) {
-  return (
-    text.indexOf('https://youtu.be/') === 0 ||
-    text.indexOf('https://www.youtube.com/') === 0
-  )
-}
-
-function isTwitter(text: string) {
-  return (
-    text.indexOf('https://twitter.com/') === 0 ||
-    text.indexOf('https://www.twitter.com/') === 0 ||
-    text.indexOf('https://x.com/') === 0
-  )
-}
-
-function isURL(text: string) {
-  return text.indexOf('https://') === 0
 }
