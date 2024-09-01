@@ -1,16 +1,5 @@
-User-agent: Googlebot
-Disallow: /.well-known/
-Disallow: /cdn-cgi/
-Disallow: /_next/
-
-User-agent: Twitterbot
-Disallow: /.well-known/
-Allow: /cdn-cgi/
-Disallow: /_next
-
 User-agent: *
 Disallow: /.well-known/
-Disallow: /cdn-cgi/
 Disallow: /_next/
 
 Sitemap: https://www.maretol.xyz/rss/feed.rdf
