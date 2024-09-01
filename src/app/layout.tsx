@@ -31,6 +31,8 @@ export const metadata: Metadata = {
     title: 'Maretol Base',
     description: 'Maretolのホームページ | トップページ',
     card: 'summary',
+    creator: '@maretol',
+    site: '@maretol',
     images: [getOGPImage()],
   },
   openGraph: {
