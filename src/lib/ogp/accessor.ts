@@ -32,7 +32,7 @@ async function localGetOGPData(targetURL: string) {
 async function workerGetOGPData(targetURL: string) {
   const apiKey = getOGPFetcherAPIKey()
   const headers = { 'Content-Type': 'application/json', 'x-api-key': apiKey }
-  const url = new URL('https://www.maretol.xyz/api/ogp-data-fetcher')
+  const url = new URL('https://fetch-ogp-data.maretol-ruha.workers.dev/')
   url.searchParams.append('target', targetURL)
   const req = new Request(url, {
     headers,
