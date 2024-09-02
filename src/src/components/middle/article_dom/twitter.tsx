@@ -7,7 +7,10 @@ export default async function TwitterArea({
 }) {
   const twitterPublishURL = `https://publish.twitter.com/oembed?url=${twitterURL}`
   const twitterPublish = await fetch(twitterPublishURL)
-  const twitterPublishJSON = await twitterPublish.json()
+  const twitterPublishJSON = (await twitterPublish.json()) as {
+    html: string
+    width: number
+  }
 
   const twitterHTML = twitterPublishJSON.html
   const width = twitterPublishJSON.width
