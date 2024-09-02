@@ -1,3 +1,4 @@
+import { execOGPFetcher } from '../context'
 import { getOGPFetcher, getOGPFetcherAPIKey } from '../env'
 
 export async function getOGPData(targetURL: string) {
@@ -39,7 +40,7 @@ async function workerGetOGPData(targetURL: string) {
     method: 'GET',
   })
   try {
-    const response = await fetch(req)
+    const response = await execOGPFetcher(req)
     const parsed = (await response.json()) as OGPResult
 
     return parsed

@@ -1,7 +1,19 @@
 {
   "root": true,
-  "extends": ["next/core-web-vitals", "eslint:recommended", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "prettier",
+    "plugin:eslint-plugin-next-on-pages/recommended"
+  ],
   "rules": {
-    "indent": ["error", 2]
-  }
+    "indent": [
+      "error",
+      2
+    ],
+    "no-unused-vars": "off"
+  },
+  "plugins": [
+    "eslint-plugin-next-on-pages"
+  ]
 }

@@ -1,3 +1,4 @@
+import { execCMSParser } from '../context'
 import { getCMSParser, getCMSParserAPIKey } from '../env'
 
 export async function parseCMSData(cmsContent: string) {
@@ -27,7 +28,6 @@ async function localParseCMSData(cmsContent: string) {
   }
 }
 
-// 本当はworkerをコンテキスト経由でアクセスしたいが、コンテキストを扱えるように作ってなかったので、一旦直接アクセスする
 async function workerParseCMSData(cmsContent: string) {
   const apiKey = getCMSParserAPIKey()
   const headers = { 'Content-Type': 'application/json', 'x-api-key': apiKey }
@@ -38,7 +38,7 @@ async function workerParseCMSData(cmsContent: string) {
     body,
   })
   try {
-    const response = await fetch(req)
+    const response = await execCMSParser(req)
     const parsed = (await response.json()) as ParsedResult
 
     const resultArray = parsed.result
