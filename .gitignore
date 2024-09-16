@@ -44,3 +44,5 @@ next-env.d.ts
 # public の画像ソース
 # サーバでは r2 リソースを使用する。ローカルでのみ利用
 /public/image/**
+
+.dev.vars
